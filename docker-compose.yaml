@@ -1,0 +1,11 @@
+version: '3.9'
+services:
+  my-services: 
+    container_name: postgres-silvia
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=silvia1234
+    volumes:
+      - /var/lib/postgresql/data
