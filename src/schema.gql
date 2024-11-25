@@ -1,0 +1,43 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserOutputDto {
+  id: Int!
+  email: String!
+  name: String!
+  age: Int!
+  gender: Boolean!
+}
+
+type Query {
+  getAllUsersToGql: [UserOutputDto!]!
+}
+
+type Mutation {
+  createNewUserToGql(createUserDto: UserCreateDto!): UserOutputDto!
+  updateUserToGql(updateUserDto: UserUpdateDto!): UserOutputDto!
+  deleteUserToGql(selectedId: Float!): UserOutputDto!
+}
+
+input UserCreateDto {
+  id: Int!
+  email: String!
+  name: String!
+  age: Int!
+  gender: Boolean!
+}
+
+input UserUpdateDto {
+  """수정할 유저의 id"""
+  selectedId: Int!
+  updateData: PartialUserCreateDto!
+}
+
+input PartialUserCreateDto {
+  id: Int
+  email: String
+  name: String
+  age: Int
+  gender: Boolean
+}
