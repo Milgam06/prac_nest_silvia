@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType, InputType } from "@nestjs/graphql";
+import { Gender } from "@prisma/client";
 
 //공통 dto
 @ObjectType({ isAbstract: true })
@@ -13,15 +14,12 @@ class UserGqlDto {
   @Field(() => Int)
   age: number;
 
-  @Field(() => Boolean)
-  gender: boolean;
+  @Field(() => Gender)
+  gender: Gender;
 }
 
 @InputType() // 일부만 수정할 수 있게 UserCreateDto를 Partial한 타입 생성함
 export class PartialUserCreateDto {
-  @Field(() => Int, { nullable: true })
-  id?: number;
-
   @Field(() => String, { nullable: true })
   email?: string;
 
@@ -31,8 +29,8 @@ export class PartialUserCreateDto {
   @Field(() => Int, { nullable: true })
   age?: number;
 
-  @Field(() => Boolean, { nullable: true })
-  gender?: boolean;
+  @Field(() => Gender, { nullable: true })
+  gender?: Gender;
 }
 
 @InputType() //UserGqlDto 상속해서 Input 사용
@@ -40,8 +38,8 @@ export class UserCreateDto extends UserGqlDto {}
 
 @ObjectType() //이것도 UserGqlDto 상속해서 Output 사용
 export class UserOutputDto extends UserGqlDto {
-  @Field(() => Int)
-  id: number;
+  @Field(() => String)
+  uuid: string;
 }
 
 @InputType()

@@ -1,4 +1,6 @@
 import { Injectable } from "@nestjs/common";
+import { v1 as uuid } from "uuid";
+
 import { PrismaService } from "src/prisma/prisma.service";
 import { UserCreateDto, UserOutputDto, UserUpdateDto } from "./user_gql.model";
 
@@ -11,25 +13,30 @@ export class UserGqlService {
   }
 
   async createNewUser(createUserDto: UserCreateDto) {
-    const lastCreatedUser = await this.prismaService.users.findFirst({
-      orderBy: { id: "desc" },
-    });
+    // const lastCreatedUser = await this.prismaService.users.findFirst({
+    //   orderBy: {  },
+    // });
 
     return this.prismaService.users.create({
-      data: { id: lastCreatedUser.id + 1, ...createUserDto },
+      data: {
+        uuid: uuid(),
+        ...createUserDto,
+      },
     });
   }
 
-  async updateUser(updateUserDto: UserUpdateDto) {
-    return this.prismaService.users.update({
-      where: { id: updateUserDto.selectedId },
-      data: updateUserDto.updateData,
-    });
-  }
+  //uuid에 맞춰 refactor 필요
 
-  async deleteUser(selectedId: number) {
-    return this.prismaService.users.delete({
-      where: { id: selectedId },
-    });
-  }
+  // async updateUser(updateUserDto: UserUpdateDto) {
+  //   return this.prismaService.users.update({
+  //     where: { name: updateUserDto. },
+  //     data: updateUserDto.updateData,
+  //   });
+  // }
+
+  // async deleteUser(userName: string) {
+  //   return this.prismaService.users.delete({
+  //     where: { name: userName },
+  //   });
+  // }
 }

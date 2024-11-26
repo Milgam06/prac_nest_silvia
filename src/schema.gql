@@ -3,11 +3,11 @@
 # ------------------------------------------------------
 
 type UserOutputDto {
+  uuid: String!
   email: String!
   name: String!
   age: Int!
   gender: Boolean!
-  id: Int!
 }
 
 type Query {
@@ -21,6 +21,7 @@ type Mutation {
 }
 
 input UserCreateDto {
+  uuid: String!
   email: String!
   name: String!
   age: Int!
@@ -34,7 +35,6 @@ input UserUpdateDto {
 }
 
 input PartialUserCreateDto {
-  id: Int
   email: String
   name: String
   age: Int

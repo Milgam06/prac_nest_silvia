@@ -26,30 +26,30 @@ export class UserController {
     };
   }
 
-  @Post("/:id")
-  async fetchUser(
-    @Param("id") id: string,
-    @Body()
-    fetchDataDto: Partial<Users>
-  ) {
-    const updatedUserData = await this.userService.fetchUserData(
-      Number(id),
-      fetchDataDto
-    );
-    return {
-      message: "User data updated successfully",
-      STATUS_CODES: 200,
-      updatedUserData,
-    };
-  }
+  // @Post("/:id")
+  // async fetchUser(
+  //   @Param("id") id: string,
+  //   @Body()
+  //   fetchDataDto: Partial<Users>
+  // ) {
+  //   const updatedUserData = await this.userService.fetchUserData(
+  //     Number(id),
+  //     fetchDataDto
+  //   );
+  //   return {
+  //     message: "User data updated successfully",
+  //     STATUS_CODES: 200,
+  //     updatedUserData,
+  //   };
+  // }
 
-  @Delete("/:id")
-  async deleteUser(@Param("id") id: string) {
-    const deletedUserData = await this.userService.deleteUserData(Number(id));
-    return {
-      message: "User data deleted successfully",
-      STATUS_CODES: 200,
-      deletedUserData,
-    };
-  }
+  // @Delete("/:id")
+  // async deleteUser(@Param("id") id: string) {
+  //   const deletedUserData = await this.userService.deleteUserData(Number(id));
+  //   return {
+  //     message: "User data deleted successfully",
+  //     STATUS_CODES: 200,
+  //     deletedUserData,
+  //   };
+  // }
 }

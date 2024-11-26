@@ -18,16 +18,18 @@ export class UserResolver {
     return this.userGqlService.createNewUser(createUserDto);
   }
 
-  @Mutation(() => UserOutputDto)
-  async updateUserToGql(
-    @Args("updateUserDto")
-    updateUserDto: UserUpdateDto
-  ) {
-    return this.userGqlService.updateUser(updateUserDto);
-  }
+  // schema 변화에 따른 service refactor 대기
 
-  @Mutation(() => UserOutputDto)
-  async deleteUserToGql(@Args("selectedId") selectedId: number) {
-    return this.userGqlService.deleteUser(selectedId);
-  }
+  // @Mutation(() => UserOutputDto)
+  // async updateUserToGql(
+  //   @Args("updateUserDto")
+  //   updateUserDto: UserUpdateDto
+  // ) {
+  //   return this.userGqlService.updateUser(updateUserDto);
+  // }
+
+  // @Mutation(() => UserOutputDto)
+  // async deleteUserToGql(@Args("userName") userName: string) {
+  //   return this.userGqlService.deleteUser(userName);
+  // }
 }
