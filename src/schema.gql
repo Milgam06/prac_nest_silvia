@@ -3,11 +3,11 @@
 # ------------------------------------------------------
 
 type UserOutputDto {
-  id: Int!
   email: String!
   name: String!
   age: Int!
   gender: Boolean!
+  id: Int!
 }
 
 type Query {
@@ -21,7 +21,6 @@ type Mutation {
 }
 
 input UserCreateDto {
-  id: Int!
   email: String!
   name: String!
   age: Int!
