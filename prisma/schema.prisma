@@ -13,13 +13,17 @@ datasource db {
   url = env("DATABASE_URL")
 }
 
-
+  // 성별은 enum으로 정의
+enum Gender {
+  MALE
+  FEMALE
+}
 model Users {
-  id Int @id @default(autoincrement())
+  uuid String @id @default(uuid())
   email String @db.VarChar(255)
   name String @db.VarChar(255)
   age Int @db.Integer
-  gender Boolean //only male or female
+  gender Gender @default(MALE)
 }
 
 
