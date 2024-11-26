@@ -6,13 +6,17 @@ import { UserCreateDto, UserOutputDto, UserUpdateDto } from "./user_gql.model";
 export class UserGqlService {
   constructor(private prismaService: PrismaService) {}
 
-  async getAllUsersDatas(): Promise<UserOutputDto[]> {
+  async getAllUsersData(): Promise<UserOutputDto[]> {
     return this.prismaService.users.findMany();
   }
 
   async createNewUser(createUserDto: UserCreateDto) {
+    const lastCreatedUser = await this.prismaService.users.findFirst({
+      orderBy: { id: "desc" },
+    });
+
     return this.prismaService.users.create({
-      data: createUserDto,
+      data: { id: lastCreatedUser.id + 1, ...createUserDto },
     });
   }
 

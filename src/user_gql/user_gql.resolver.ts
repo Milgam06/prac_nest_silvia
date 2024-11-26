@@ -8,7 +8,7 @@ export class UserResolver {
 
   @Query(() => [UserOutputDto])
   async getAllUsersToGql() {
-    return this.userGqlService.getAllUsersDatas();
+    return this.userGqlService.getAllUsersData();
   }
 
   @Mutation(() => UserOutputDto) // mutation은 생성, 수정, 삭제할 때 사용됨

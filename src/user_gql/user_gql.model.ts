@@ -4,9 +4,6 @@ import { Field, Int, ObjectType, InputType } from "@nestjs/graphql";
 @ObjectType({ isAbstract: true })
 @InputType({ isAbstract: true })
 class UserGqlDto {
-  @Field(() => Int)
-  id: number;
-
   @Field(() => String)
   email: string;
 
@@ -42,7 +39,10 @@ export class PartialUserCreateDto {
 export class UserCreateDto extends UserGqlDto {}
 
 @ObjectType() //이것도 UserGqlDto 상속해서 Output 사용
-export class UserOutputDto extends UserGqlDto {}
+export class UserOutputDto extends UserGqlDto {
+  @Field(() => Int)
+  id: number;
+}
 
 @InputType()
 export class UserUpdateDto {
