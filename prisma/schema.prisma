@@ -18,11 +18,12 @@ enum Gender {
   MALE
   FEMALE
 }
+
 model Users {
   uuid String @id @default(uuid())
+  nick String @db.VarChar(255)
   email String @db.VarChar(255)
-  name String @db.VarChar(255)
-  age Int @db.Integer
+  password String @db.VarChar(255)
   gender Gender @default(MALE)
 }
 

@@ -1,18 +1,32 @@
-import { Field, Int, ObjectType, InputType } from "@nestjs/graphql";
+import {
+  Field,
+  Int,
+  ObjectType,
+  InputType,
+  registerEnumType,
+} from "@nestjs/graphql";
 import { Gender } from "@prisma/client";
+
+registerEnumType(Gender, {
+  name: "Gender",
+  description: "유저 성별",
+});
 
 //공통 dto
 @ObjectType({ isAbstract: true })
 @InputType({ isAbstract: true })
 class UserGqlDto {
   @Field(() => String)
+  nick: string;
+
+  @Field(() => String)
   email: string;
 
   @Field(() => String)
   name: string;
 
-  @Field(() => Int)
-  age: number;
+  @Field(() => String)
+  password: string;
 
   @Field(() => Gender)
   gender: Gender;
@@ -21,13 +35,16 @@ class UserGqlDto {
 @InputType() // 일부만 수정할 수 있게 UserCreateDto를 Partial한 타입 생성함
 export class PartialUserCreateDto {
   @Field(() => String, { nullable: true })
+  nick?: string;
+
+  @Field(() => String, { nullable: true })
   email?: string;
 
   @Field(() => String, { nullable: true })
   name?: string;
 
-  @Field(() => Int, { nullable: true })
-  age?: number;
+  @Field(() => String, { nullable: true })
+  password?: number;
 
   @Field(() => Gender, { nullable: true })
   gender?: Gender;
