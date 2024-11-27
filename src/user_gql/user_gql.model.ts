@@ -23,9 +23,6 @@ class UserGqlDto {
   email: string;
 
   @Field(() => String)
-  name: string;
-
-  @Field(() => String)
   password: string;
 
   @Field(() => Gender)
@@ -39,9 +36,6 @@ export class PartialUserCreateDto {
 
   @Field(() => String, { nullable: true })
   email?: string;
-
-  @Field(() => String, { nullable: true })
-  name?: string;
 
   @Field(() => String, { nullable: true })
   password?: number;
