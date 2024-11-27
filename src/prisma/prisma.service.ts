@@ -8,4 +8,12 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
   async onModuleInit() {
     await this.$connect(); // 여기서 this는 PrismaClient를 상속 받은 PrismaService
   }
+
+  async verifyingDuplicateUser(nick: string) {
+    return await this.users.findMany({
+      where: {
+        nick: nick,
+      },
+    });
+  }
 }
