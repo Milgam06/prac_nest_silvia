@@ -21,7 +21,7 @@ enum Gender {
 
 model Users {
   uuid String @id @default(uuid())
-  nick String @db.VarChar(255)
+  nick String @unique @db.VarChar(255)
   email String @db.VarChar(255)
   password String @db.VarChar(255)
   gender Gender @default(MALE)
