@@ -3,11 +3,23 @@
 # ------------------------------------------------------
 
 type UserOutputDto {
-  uuid: String!
+  nick: String!
   email: String!
-  name: String!
-  age: Int!
-  gender: Boolean!
+  password: String!
+  gender: Gender!
+  uuid: String!
+  authToken: String
+}
+
+"""유저 성별"""
+enum Gender {
+  MALE
+  FEMALE
+}
+
+type UserAuthOutputDto {
+  access_token: String!
+  refresh_token: String
 }
 
 type Query {
@@ -17,26 +29,34 @@ type Query {
 type Mutation {
   createNewUserToGql(createUserDto: UserCreateDto!): UserOutputDto!
   updateUserToGql(updateUserDto: UserUpdateDto!): UserOutputDto!
-  deleteUserToGql(selectedId: Float!): UserOutputDto!
+  deleteUserToGql(nick: String!): UserOutputDto!
+  loginUserToGql(userAuthInputDto: UserAuthInputDto!): UserAuthOutputDto!
+  logoutUserToGql(nick: String!): UserOutputDto!
+  refreshTokenToGql(refreshToken: String!): UserAuthOutputDto!
 }
 
 input UserCreateDto {
-  uuid: String!
+  nick: String!
   email: String!
-  name: String!
-  age: Int!
-  gender: Boolean!
+  password: String!
+  gender: Gender!
 }
 
 input UserUpdateDto {
   """수정할 유저의 id"""
-  selectedId: Int!
+  updateUserNick: String!
   updateData: PartialUserCreateDto!
 }
 
 input PartialUserCreateDto {
+  nick: String
+  authToken: String
   email: String
-  name: String
-  age: Int
-  gender: Boolean
+  password: String
+  gender: Gender
+}
+
+input UserAuthInputDto {
+  loginUserNick: String!
+  loginPassword: String!
 }
