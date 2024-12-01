@@ -1,9 +1,15 @@
 import { Resolver, Query, Mutation, Args } from "@nestjs/graphql";
 import { UserGqlService } from "./user_gql.service";
-import { UserCreateDto, UserOutputDto, UserUpdateDto } from "./user_gql.model";
+import {
+  UserAuthInputDto,
+  UserAuthOutputDto,
+  UserCreateDto,
+  UserOutputDto,
+  UserUpdateDto,
+} from "./dto/user.dto";
 
 @Resolver()
-export class UserResolver {
+export class UserGqlResolver {
   constructor(private userGqlService: UserGqlService) {}
 
   @Query(() => [UserOutputDto])
@@ -18,18 +24,33 @@ export class UserResolver {
     return this.userGqlService.createNewUser(createUserDto);
   }
 
-  // schema 변화에 따른 service refactor 대기
+  @Mutation(() => UserOutputDto)
+  async updateUserToGql(
+    @Args("updateUserDto")
+    updateUserDto: UserUpdateDto
+  ) {
+    return this.userGqlService.updateUser(updateUserDto);
+  }
 
-  // @Mutation(() => UserOutputDto)
-  // async updateUserToGql(
-  //   @Args("updateUserDto")
-  //   updateUserDto: UserUpdateDto
-  // ) {
-  //   return this.userGqlService.updateUser(updateUserDto);
-  // }
+  @Mutation(() => UserOutputDto)
+  async deleteUserToGql(@Args("nick") nick: string) {
+    return this.userGqlService.deleteUser(nick);
+  }
 
-  // @Mutation(() => UserOutputDto)
-  // async deleteUserToGql(@Args("userName") userName: string) {
-  //   return this.userGqlService.deleteUser(userName);
-  // }
+  @Mutation(() => UserAuthOutputDto)
+  async loginUserToGql(
+    @Args("userAuthInputDto") userAuthDto: UserAuthInputDto
+  ) {
+    return this.userGqlService.loginUser(userAuthDto);
+  }
+
+  @Mutation(() => UserOutputDto)
+  async logoutUserToGql(@Args("nick") nick: string) {
+    return this.userGqlService.logoutUser(nick);
+  }
+
+  @Mutation(() => UserAuthOutputDto)
+  async refreshTokenToGql(@Args("refreshToken") refreshToken: string) {
+    return this.userGqlService.refreshUserAccessToken(refreshToken);
+  }
 }
