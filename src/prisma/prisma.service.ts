@@ -10,7 +10,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
   }
 
   async verifyingDuplicateUser(nick: string) {
-    return await this.users.findMany({
+    return await this.user.findMany({
       where: {
         nick: nick,
       },

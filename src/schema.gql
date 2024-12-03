@@ -8,7 +8,7 @@ type UserOutputDto {
   password: String!
   gender: Gender!
   uuid: String!
-  authToken: String
+  refreshToken: String
 }
 
 """유저 성별"""
@@ -50,7 +50,7 @@ input UserUpdateDto {
 
 input PartialUserCreateDto {
   nick: String
-  authToken: String
+  refreshToken: String
   email: String
   password: String
   gender: Gender

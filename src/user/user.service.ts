@@ -19,7 +19,7 @@ export class UserGqlService {
   ) {}
 
   async getAllUsersData(): Promise<UserOutputDto[]> {
-    return this.prismaService.users.findMany();
+    return this.prismaService.user.findMany();
   }
 
   async createNewUser(createUserDto: UserCreateDto) {
@@ -33,7 +33,7 @@ export class UserGqlService {
       );
     }
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
-    return this.prismaService.users.create({
+    return this.prismaService.user.create({
       data: {
         uuid: uuid(),
         ...createUserDto,
@@ -43,20 +43,20 @@ export class UserGqlService {
   }
 
   async updateUser(updateUserDto: UserUpdateDto) {
-    return this.prismaService.users.update({
+    return this.prismaService.user.update({
       where: { nick: updateUserDto.updateUserNick },
       data: updateUserDto.updateData,
     });
   }
 
   async deleteUser(nick: string) {
-    return this.prismaService.users.delete({
+    return this.prismaService.user.delete({
       where: { nick: nick },
     });
   }
 
   async loginValidation(userAuthDto: UserAuthInputDto) {
-    const user = await this.prismaService.users.findUnique({
+    const user = await this.prismaService.user.findUnique({
       where: { nick: userAuthDto.loginUserNick },
     });
 
@@ -89,7 +89,7 @@ export class UserGqlService {
     const hashedRefreshToken = await bcrypt.hash(refresh_token, 10);
     this.updateUser({
       updateUserNick: userAuthDto.loginUserNick,
-      updateData: { authToken: hashedRefreshToken },
+      updateData: { refreshToken: hashedRefreshToken },
     });
     return {
       access_token: access_token,
@@ -98,9 +98,9 @@ export class UserGqlService {
   }
 
   async logoutUser(nick: string) {
-    return this.prismaService.users.update({
+    return this.prismaService.user.update({
       where: { nick: nick },
-      data: { authToken: null },
+      data: { refreshToken: null },
     });
   }
 
@@ -113,11 +113,11 @@ export class UserGqlService {
       );
     }
 
-    const chechTokenUser = await this.prismaService.users.findUnique({
+    const checkTokenUser = await this.prismaService.user.findUnique({
       where: { uuid: checkTokenPayload.sub },
     });
 
-    if (!chechTokenUser) {
+    if (!checkTokenUser) {
       throw new HttpException(
         "존재하지 않는 사용자입니다.",
         HttpStatus.UNAUTHORIZED
@@ -126,7 +126,7 @@ export class UserGqlService {
 
     const isRefreshTokenValid = await bcrypt.compare(
       refreshToken,
-      chechTokenUser.authToken
+      checkTokenUser.refreshToken
     );
 
     if (!isRefreshTokenValid) {
@@ -138,7 +138,7 @@ export class UserGqlService {
 
     const newAccessToken = this.jwtService.sign(
       { username: chechTokenUser.nick, sub: chechTokenUser.uuid },
-      { secret: process.env.JWT_SECRET_KEY, expiresIn: "1h" }
+      { secret: this.configService.get<string>('JWT_SECRET_KEY'), expiresIn: "1h" }
     );
     return { access_token: newAccessToken };
   }

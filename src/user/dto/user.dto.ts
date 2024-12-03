@@ -34,7 +34,7 @@ export class UserOutputDto extends UserGqlDto {
   uuid: string;
 
   @Field(() => String, { nullable: true })
-  authToken?: string;
+  refreshToken?: string;
 }
 
 @InputType() //UserGqlDto 상속해서 Input 사용
@@ -46,7 +46,7 @@ export class PartialUserCreateDto {
   nick?: string;
 
   @Field(() => String, { nullable: true })
-  authToken?: string;
+  refreshToken?: string;
 
   @Field(() => String, { nullable: true })
   email?: string;

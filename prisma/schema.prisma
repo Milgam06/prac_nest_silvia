@@ -19,9 +19,9 @@ enum Gender {
   FEMALE
 }
 
-model Users {
-  uuid String @id @default(uuid())
-  authToken String? @db.VarChar(255)
+model user {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  refreshToken String? @db.VarChar(255)
   nick String @unique @db.VarChar(255)
   email String @db.VarChar(255)
   password String @db.VarChar(255)

@@ -1,2 +1,2 @@
 -- AlterTable
-ALTER TABLE "Users" ADD COLUMN     "authToken" VARCHAR(255);
+ALTER TABLE "Users" ADD COLUMN     "refreshToken" VARCHAR(255);
