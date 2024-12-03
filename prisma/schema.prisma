@@ -17,6 +17,7 @@ datasource db {
 enum Gender {
   MALE
   FEMALE
+  PRIVATE // 성별을 공개하지 않는 경우
 }
 
 model user {
